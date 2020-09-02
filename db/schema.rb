@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,31 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 4) do
+ActiveRecord::Schema.define(version: 2020_09_01_105615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "chatrooms", force: :cascade do |t|
-    t.string   "topic"
+  create_table "channels", force: :cascade do |t|
+    t.integer "chatroom_id"
+    t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "slug"
   end
 
-  create_table "messages", force: :cascade do |t|
-    t.string   "content"
-    t.integer  "user_id"
-    t.integer  "chatroom_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+  create_table "chatrooms", id: :serial, force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "relationship_id"
   end
 
-  add_index "messages", ["chatroom_id"], name: "index_messages_on_chatroom_id", using: :btree
-  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+  create_table "chatrooms_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "chatroom_id", null: false
+    t.index ["chatroom_id"], name: "index_chatrooms_users_on_chatroom_id"
+    t.index ["user_id"], name: "index_chatrooms_users_on_user_id"
+  end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "username"
+  create_table "messages", id: :serial, force: :cascade do |t|
+    t.string "content"
+    t.integer "user_id"
+    t.integer "chatroom_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chatroom_id"], name: "index_messages_on_chatroom_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
+    t.integer "type_id"
+    t.integer "chatroom_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

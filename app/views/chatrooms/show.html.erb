@@ -1,17 +1,174 @@
-<div class="row col-md-8 col-md-offset-2">
-  <h1><%= @chatroom.topic %></h1>
+ <script>
+  current_user_id = "<%= current_user.id %>"
+  chatroomId = "<%= @chatroom.id %>"
+</script>
 
-<div class="panel panel-default">
+
+<style>
+
+  ._2hqOq {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+  }
+
+  .message-out {
+    align-items: flex-end;
+  }
+
+  ._2et95 {
+    position: relative;
+    flex: none;
+    color: #303030;
+    font-size: 14.2px;
+    /* line-height: 19px; */
+  }
+
+  ._2et95 {
+    border-radius: 7.5px;
+  }
+
+  ._2et95:last-of-type {
+    margin-bottom: 0;
+  }
+
+  ._2-dPL {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    display: block;
+    width: 8px;
+    height: 13px;
+  }
+
+  .message-out ._2-dPL {
+    color: #dcf8c6;
+  }
+
+  .message-out ._2-dPL,  .tail-override-right ._2-dPL {
+    right: -8px;
+  }
+
+  ._3sKvP {
+    position: relative;
+    z-index: 200;
+    border-radius: 7.5px;
+  }
+
+  .wQZ0F {
+    box-shadow: 0 1px .5px rgba(0,0,0),.13);
+  }
+
+  .message-out ._3sKvP {
+    background-color: #dcf8c6;
+    max-width: 505px;
+  }
+
+  .message-out ._1dvTE ._3sKvP, .message-in ._1dvTE ._3sKvP {
+    border-top-right-radius: 0;
+  }
+
+  ._274yw {
+    box-sizing: border-box;
+    padding: 6px 7px 8px 9px;
+  }
+
+  .eRacY {
+    position: relative;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  ._3Whw5 {
+    visibility: visible;
+  }
+
+  .selectable-text.invisible-space:after,
+  .selectable-text.invisible-space:before {
+    display: inline-block;
+    width: 0;
+  }
+
+  ._2oWZe {
+    display: inline-block;
+    vertical-align: middle;
+    width: 56px;
+  }
+
+  ._2HWXK {
+    width: 74px;
+  }
+
+  ._2frDn {
+    position: relative;
+    z-index: 10;
+    float: right;
+    margin: -10px 0 -5px 4px;
+  }
+
+  .VGBA3 {
+    height: 15px;
+    color: rgba(0,0,0,0.45);
+    font-size: 11px;
+    line-height: 15px;
+    white-space: nowrap;
+  }
+
+  ._18lLQ {
+    vertical-align: top;
+  }
+
+  ._20T2h, ._18lLQ {
+    display: inline-block;
+  }
+
+  ._1qPwk {
+    display: inline-block;
+    color: rgba(0,0,0,0.3);
+    margin-left: 3px;
+  }
+
+  .message-in ._2-dPL {
+    left: -8px;
+    color: #fff !important;
+  }
+
+  .message-in {
+    align-items: flex-start;
+  }
+
+  .message-in ._3sKvP {
+    background-color: #fff;
+    max-width: 505px;
+  }
+
+  .message-in ._1dvTE ._3sKvP {
+    border-top-left-radius: 0;
+  }
+
+  .selectable-text {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+</style>
+
+
+<div class="row col-md-8 col-md-offset-2">
+  <h1><%= current_user.id %></h1>
+
+<div class="panel panel-default" style=" height: 500px; background-image: url(https://i.pinimg.com/originals/ab/ab/60/abab60f06ab52fa7846593e6ae0c9a0b.png);">
   <% if @chatroom.messages.any? %>
-    <div class="panel-body" id="messages">
+    <div class="panel-body" id="messages" data-chatroom=<%= @chatroom.id %>>
       <%= render partial: 'messages/message', collection: @chatroom.messages%>
     </div>
   <%else%>
-    <div class="panel-body hidden" id="messages">
+    <div class="panel-body hidden" id="messages" data-chatroom=<%= @chatroom.id %>>
     </div>
   <%end%>
 </div>
-
 
   <%= render partial: 'messages/message_form', locals: {message: @message, chatroom: @chatroom}%>
 </div>

@@ -8,9 +8,11 @@
     
   </div>
     <ul id="chatroom-index"> 
-  <% if @chatrooms.any? %>
-      <%= render @chatrooms%>
-  <%else %>
+  <% if @chatroom_records.present? %>
+    <% @chatroom_records.each do |record| %>
+      <li><%= link_to record[:friend_name], "/chatrooms/#{record[:id]}" %></li>
+    <% end %>
+  <% else %>
     </ul>
     <p>Be the first one to make a chatroom!</p>
   <% end %>

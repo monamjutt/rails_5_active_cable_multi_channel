@@ -1,3 +1,5 @@
 $("input#chatroom_topic").val(" ")
 $("#chatroom-errors").html(" ")
-$("#chatroom-index").append('<li><%= link_to @chatroom.topic, chatroom_path(@chatroom) %></li>')
+<% if @chatroom %>
+  $("#chatroom-index").append('<li><%= link_to @conversation_username, chatroom_path(@chatroom) %></li>')
+<% end %>
